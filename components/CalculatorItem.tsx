@@ -5,36 +5,22 @@ import { Input } from "@/components/ui/Input";
 import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
-interface Cost {
-  resources: {
-    sulfur: number;
-    charcoal: number;
-    frags?: number;
-    low_grade?: number;
-    cloth?: number;
-    stone?: number;
-  };
-  components?: {
-    pipes?: number;
-    rope?: number;
-    tech_trash?: number;
-  };
-}
+type Cost = Record<string, number> | null;
 
-interface CalculatorItemProps {
-  item: {
-    name: string;
-    cost: Cost;
-  };
-  setTotalCost: Dispatch<SetStateAction<Cost | null>>;
-}
+type Explosive = {
+  name: string;
+  cost: Record<string, number>;
+};
 
-// TODO
-// consider that amount could go up or down by any amount (typing directly into input or using buttons, etc)
-// figure out addiiton and subtraction (remove from state when 0 if subtracting)
+type CalculatorItemProps = {
+  item: Explosive;
+  totalCost: Cost;
+  setTotalCost: Dispatch<SetStateAction<Cost>>;
+};
 
 export default function CalculatorItem({
   item,
+  totalCost,
   setTotalCost,
 }: CalculatorItemProps) {
   const [amount, setAmount] = useState(0);
@@ -43,8 +29,49 @@ export default function CalculatorItem({
     const newAmount = Number(e.target.value.replace(/[^0-9]/, ""));
 
     if (typeof newAmount === "number") {
+      const difference = newAmount - amount;
+
+      if (difference < 0) {
+        handleDecremenent(Math.abs(difference));
+      } else if (difference > 0) {
+        handleIncrement(Math.abs(difference));
+      }
+    }
+  }
+
+  function handleIncrement(count: number) {
+    const newAmount = amount + count;
+
+    const newTotalCost = { ...totalCost };
+
+    Object.entries(item.cost).forEach(([key, value]) => {
+      newTotalCost[key] = (newTotalCost[key] ?? 0) + value * count;
+    });
+
+    setAmount(newAmount);
+    setTotalCost(newTotalCost);
+  }
+
+  function handleDecremenent(count: number) {
+    const newAmount = amount - count;
+
+    if (newAmount >= 0 && totalCost !== null) {
+      const newTotalCost = { ...totalCost };
+
+      Object.entries(item.cost).forEach(([key, value]) => {
+        newTotalCost[key] = newTotalCost[key] - value * count;
+        if (newTotalCost[key] === 0) {
+          delete newTotalCost[key];
+        }
+      });
+
       setAmount(newAmount);
-      setTotalCost(item.cost);
+
+      if (Object.values(newTotalCost).every((x) => x === 0)) {
+        setTotalCost(null);
+      } else {
+        setTotalCost(newTotalCost);
+      }
     }
   }
 
@@ -54,13 +81,13 @@ export default function CalculatorItem({
         src={`/boom/${item.name.toLowerCase().replaceAll(" ", "_")}.png`}
         width={75}
         height={75}
-        alt={`${item.name}`}
+        alt={item.name}
       />
       <span className="font-medium">{item.name}</span>
       <div className="flex items-center gap-4">
         <Minus
           className="cursor-pointer touch-none select-none dark:text-slate-400"
-          onClick={() => amount > 0 && setAmount((oldAmount) => oldAmount - 1)}
+          onClick={() => handleDecremenent(1)}
         />
         <Input
           value={amount}
@@ -70,7 +97,7 @@ export default function CalculatorItem({
         />
         <Plus
           className="cursor-pointer touch-none select-none dark:text-slate-400"
-          onClick={() => setAmount((oldAmount) => oldAmount + 1)}
+          onClick={() => handleIncrement(1)}
         />
       </div>
     </div>

@@ -76,14 +76,14 @@ export default function CalculatorItem({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 rounded-lg border p-3 text-center dark:border-slate-700 dark:bg-slate-800">
+    <div className="flex flex-col items-center justify-between gap-4 rounded-lg border p-3 text-center dark:border-slate-700 dark:bg-slate-800">
       <Image
         src={`/boom/${item.name.toLowerCase().replaceAll(" ", "_")}.png`}
         width={75}
         height={75}
         alt={item.name}
       />
-      <span className="font-medium">{item.name}</span>
+      <span>{item.name}</span>
       <div className="flex items-center gap-4">
         <Minus
           className="cursor-pointer touch-none select-none dark:text-slate-400"

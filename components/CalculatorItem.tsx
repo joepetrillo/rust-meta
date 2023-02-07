@@ -79,14 +79,14 @@ export default function CalculatorItem({
     <div className="flex flex-col items-center justify-between gap-4 rounded-lg border p-3 text-center dark:border-slate-700 dark:bg-slate-800">
       <Image
         src={`/boom/${item.name.toLowerCase().replaceAll(" ", "_")}.png`}
-        width={75}
-        height={75}
+        width={65}
+        height={65}
         alt={item.name}
       />
       <span>{item.name}</span>
       <div className="flex items-center gap-4">
         <Minus
-          className="cursor-pointer touch-none select-none dark:text-slate-400"
+          className="cursor-pointer touch-none select-none dark:text-slate-400 dark:hover:text-slate-50"
           onClick={() => handleDecremenent(1)}
         />
         <Input
@@ -96,7 +96,7 @@ export default function CalculatorItem({
           className="w-16 border text-center dark:border-slate-700 dark:bg-slate-900"
         />
         <Plus
-          className="cursor-pointer touch-none select-none dark:text-slate-400"
+          className="cursor-pointer touch-none select-none dark:text-slate-400 dark:hover:text-slate-50"
           onClick={() => handleIncrement(1)}
         />
       </div>

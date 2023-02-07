@@ -10,7 +10,7 @@ export default function Footer() {
           target="_blank"
           rel="noreferrer"
           href="https://github.com/joepetrillo"
-          className="font-medium underline underline-offset-4 dark:hover:text-slate-50"
+          className="font-medium underline underline-offset-4 transition-colors dark:hover:text-slate-50"
         >
           Joe Petrillo
         </a>

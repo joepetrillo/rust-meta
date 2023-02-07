@@ -8,5 +8,10 @@
   "parser": "@typescript-eslint/parser",
   "rules": {
     "tailwindcss/classnames-order": "off"
+  },
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn"]
+    }
   }
 }

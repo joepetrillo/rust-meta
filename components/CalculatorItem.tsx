@@ -4,13 +4,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/Input";
 import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-
-type Cost = Record<string, number> | null;
-
-type Explosive = {
-  name: string;
-  cost: Record<string, number>;
-};
+import type { Explosive, Cost } from "@/lib/data";
 
 type CalculatorItemProps = {
   item: Explosive;
@@ -41,37 +35,32 @@ export default function CalculatorItem({
 
   function handleIncrement(count: number) {
     const newAmount = amount + count;
-
     const newTotalCost = { ...totalCost };
 
-    Object.entries(item.cost).forEach(([key, value]) => {
+    Object.entries(item.cost).forEach((arr) => {
+      const [key, value] = arr as [keyof Cost, number];
       newTotalCost[key] = (newTotalCost[key] ?? 0) + value * count;
     });
 
-    setAmount(newAmount);
     setTotalCost(newTotalCost);
+    setAmount(newAmount);
   }
 
   function handleDecremenent(count: number) {
     const newAmount = amount - count;
+    const newTotalCost = { ...totalCost };
 
-    if (newAmount >= 0 && totalCost !== null) {
-      const newTotalCost = { ...totalCost };
-
-      Object.entries(item.cost).forEach(([key, value]) => {
+    if (newAmount >= 0) {
+      Object.entries(item.cost).forEach((arr) => {
+        const [key, value] = arr as [keyof Cost, number];
         newTotalCost[key] = newTotalCost[key] - value * count;
         if (newTotalCost[key] === 0) {
           delete newTotalCost[key];
         }
       });
 
+      setTotalCost(newTotalCost);
       setAmount(newAmount);
-
-      if (Object.values(newTotalCost).every((x) => x === 0)) {
-        setTotalCost(null);
-      } else {
-        setTotalCost(newTotalCost);
-      }
     }
   }
 

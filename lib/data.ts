@@ -1,6 +1,30 @@
-type Explosive = {
+type RaidItem =
+  | "frags"
+  | "low_grade"
+  | "cloth"
+  | "stone"
+  | "pipes"
+  | "tech_trash"
+  | "rope";
+
+export type Explosive = {
   name: string;
-  cost: Record<string, number>;
+  cost: {
+    sulfur: number;
+    charcoal: number;
+  } & Partial<Record<RaidItem, number>>;
+};
+
+export type Cost = {
+  sulfur: number;
+  charcoal: number;
+  frags: number;
+  low_grade: number;
+  cloth: number;
+  stone: number;
+  pipes: number;
+  tech_trash: number;
+  rope: number;
 };
 
 export const boom: Explosive[] = [

@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { boom } from "@/lib/data";
+import { useState, useMemo } from "react";
+import { boom, Cost } from "@/lib/data";
 import CalculatorItem from "@/components/CalculatorItem";
 import Image from "next/image";
-
-type Cost = Record<string, number> | null;
 
 function toTitleCase(str: string) {
   return str
@@ -14,7 +12,24 @@ function toTitleCase(str: string) {
 }
 
 export default function Calculator() {
-  const [totalCost, setTotalCost] = useState<Cost>(null);
+  const [totalCost, setTotalCost] = useState<Cost>({
+    sulfur: 0,
+    charcoal: 0,
+    frags: 0,
+    low_grade: 0,
+    cloth: 0,
+    stone: 0,
+    pipes: 0,
+    tech_trash: 0,
+    rope: 0,
+  });
+
+  const active = useMemo(() => {
+    return Object.entries(totalCost)
+      .map((arr) => arr as [keyof Cost, number])
+      .filter(([, value]) => value > 0)
+      .sort((a, b) => b[1] - a[1]);
+  }, [totalCost]);
 
   return (
     <>
@@ -39,9 +54,9 @@ export default function Calculator() {
         Items Required
       </h3>
 
-      {totalCost !== null ? (
+      {active.length ? (
         <div className="grid auto-rows-fr grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {Object.entries(totalCost).map(([key, value]) => {
+          {active.map(([key, value]) => {
             return (
               <div
                 key={key}

@@ -1,22 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { Input } from "@/components/ui/Input";
 import { Minus, Plus } from "lucide-react";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import type { Explosive, Cost } from "@/lib/data";
+import { Input } from "@/components/ui/Input";
+import type { Explosive, ResourceCost } from "@/lib/data";
 
-type CalculatorItemProps = {
-  item: Explosive;
-  totalCost: Cost;
-  setTotalCost: Dispatch<SetStateAction<Cost>>;
+type ExplosiveInputProps = {
+  explosive: Explosive;
+  resourceCost: ResourceCost;
+  setResourceCost: Dispatch<SetStateAction<ResourceCost>>;
+  id: string;
 };
 
-export default function CalculatorItem({
-  item,
-  totalCost,
-  setTotalCost,
-}: CalculatorItemProps) {
+export default function ExplosiveInput({
+  explosive,
+  resourceCost,
+  setResourceCost,
+  id,
+}: ExplosiveInputProps) {
   const [amount, setAmount] = useState(0);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
@@ -35,31 +37,28 @@ export default function CalculatorItem({
 
   function handleIncrement(count: number) {
     const newAmount = amount + count;
-    const newTotalCost = { ...totalCost };
+    const newResourceCost = { ...resourceCost };
 
-    Object.entries(item.cost).forEach((arr) => {
-      const [key, value] = arr as [keyof Cost, number];
-      newTotalCost[key] = (newTotalCost[key] ?? 0) + value * count;
+    Object.entries(explosive.craftCost).forEach((arr) => {
+      const [key, value] = arr as [keyof ResourceCost, number];
+      newResourceCost[key] = (newResourceCost[key] ?? 0) + value * count;
     });
 
-    setTotalCost(newTotalCost);
+    setResourceCost(newResourceCost);
     setAmount(newAmount);
   }
 
   function handleDecremenent(count: number) {
     const newAmount = amount - count;
-    const newTotalCost = { ...totalCost };
+    const newResourceCost = { ...resourceCost };
 
     if (newAmount >= 0) {
-      Object.entries(item.cost).forEach((arr) => {
-        const [key, value] = arr as [keyof Cost, number];
-        newTotalCost[key] = newTotalCost[key] - value * count;
-        if (newTotalCost[key] === 0) {
-          delete newTotalCost[key];
-        }
+      Object.entries(explosive.craftCost).forEach((arr) => {
+        const [key, value] = arr as [keyof ResourceCost, number];
+        newResourceCost[key] = newResourceCost[key] - value * count;
       });
 
-      setTotalCost(newTotalCost);
+      setResourceCost(newResourceCost);
       setAmount(newAmount);
     }
   }
@@ -67,12 +66,12 @@ export default function CalculatorItem({
   return (
     <div className="flex flex-col items-center justify-between gap-4 rounded-lg border p-3 text-center dark:border-slate-700 dark:bg-slate-800">
       <Image
-        src={`/boom/${item.name.toLowerCase().replaceAll(" ", "_")}.png`}
+        src={`/explosive/${id}.png`}
         width={65}
         height={65}
-        alt={item.name}
+        alt={explosive.name}
       />
-      <span>{item.name}</span>
+      <span>{explosive.name}</span>
       <div className="flex items-center gap-4">
         <Minus
           className="cursor-pointer touch-none select-none dark:text-slate-400 dark:hover:text-slate-50"

@@ -53,7 +53,9 @@ export default function RaidableInput({
       Object.entries(explosives[explosive].craftCost).forEach((arr) => {
         const [resource, value] = arr as [keyof ResourceCost, number];
         newResourceCost[resource] =
-          (newResourceCost[resource] ?? 0) + value * count;
+          (newResourceCost[resource] ?? 0) +
+          value *
+            Math.abs(newExplosiveCost[explosive] - explosiveCost[explosive]);
       });
     });
 
@@ -76,7 +78,10 @@ export default function RaidableInput({
         // update resource cost
         Object.entries(explosives[explosive].craftCost).forEach((arr) => {
           const [resource, value] = arr as [keyof ResourceCost, number];
-          newResourceCost[resource] = newResourceCost[resource] - value * count;
+          newResourceCost[resource] =
+            newResourceCost[resource] -
+            value *
+              Math.abs(newExplosiveCost[explosive] - explosiveCost[explosive]);
         });
       });
 

@@ -32,7 +32,7 @@ export default function RaidableCalculator() {
 
   return (
     <div>
-      <div className="mb-10 grid auto-rows-fr grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      <div className="mb-10 grid auto-rows-fr grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
         {Object.entries(raidables).map(([key, raidable]) => {
           return (
             <RaidableInput

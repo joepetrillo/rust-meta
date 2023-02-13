@@ -148,6 +148,31 @@ const wooden_high_external = new RaidableItem("Wooden High External", {
 const stone_high_external = new RaidableItem("Stone High External", {
   rocket: 4,
 });
+const metal_shop_front = new RaidableItem("Metal Shop Front", {
+  rocket: 6,
+});
+const metal_barricade = new RaidableItem("Metal Barricade", {
+  rocket: 3,
+});
+const metal_embrasure = new RaidableItem("Metal Embrasure", {
+  rocket: 4,
+});
+const strengthened_window = new RaidableItem("Strengthened Window", {
+  rocket: 3,
+});
+const auto_turret = new RaidableItem("Auto Turret", {
+  high_velocity_rocket: 3,
+});
+const vending_machine = new RaidableItem("Vending Machine", {
+  rocket: 2,
+  c4: 2,
+});
+const level_two_workbench = new RaidableItem("Level 2 Workbench", {
+  c4: 1,
+});
+const level_three_workbench = new RaidableItem("Level 3 Workbench", {
+  c4: 2,
+});
 const tool_cupboard = new RaidableItem("Tool Cupboard", {
   explosive_ammo: 9,
 });
@@ -164,5 +189,13 @@ export const raidables = {
   ladder_hatch,
   wooden_high_external,
   stone_high_external,
+  metal_shop_front,
+  metal_barricade,
+  metal_embrasure,
+  strengthened_window,
+  auto_turret,
+  vending_machine,
+  level_two_workbench,
+  level_three_workbench,
   tool_cupboard,
 };

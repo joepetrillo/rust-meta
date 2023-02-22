@@ -9,10 +9,10 @@ export default function Footer() {
         <a
           target="_blank"
           rel="noreferrer"
-          href="https://github.com/joepetrillo"
+          href="https://steamcommunity.com/id/perfect119"
           className="font-medium underline underline-offset-4 transition-colors dark:hover:text-slate-50"
         >
-          Joe Petrillo
+          Perfect
         </a>
         .
       </p>

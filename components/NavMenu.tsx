@@ -15,19 +15,17 @@ const raiding: { title: string; href: string; description: string }[] = [
   {
     title: "Explosive Calculator",
     href: "/raiding/calculator/explosives",
-    description: "Calculate the cost of crafting explosives.",
+    description: "Calculate the cost of crafting explosives",
   },
   {
     title: "Structure Calculator",
     href: "/raiding/calculator/structures",
-    description:
-      "Calculate the cost of crafting the recommended explosive combination for raidable structures.",
+    description: "Calculate the recommended cost of raiding base items",
   },
   {
     title: "Raid Cost Table",
     href: "/raiding/table",
-    description:
-      "A complete table containing the cost to raid any item with every explosive.",
+    description: "Contains the cost to raid any item with any explosive",
   },
 ];
 
@@ -35,12 +33,12 @@ const building: { title: string; href: string; description: string }[] = [
   {
     title: "Bunkers",
     href: "/building/bunkers",
-    description: "Learn how to build bunkers.",
+    description: "Learn how to build bunkers",
   },
   {
     title: "Base Designs",
     href: "/building/designs",
-    description: "Explore popular base designs.",
+    description: "Explore popular base designs",
   },
 ];
 
@@ -51,7 +49,7 @@ export default function NavMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Raiding</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            <ul className="grid w-[275px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {raiding.map((tool) => (
                 <ListItem key={tool.title} title={tool.title} href={tool.href}>
                   {tool.description}
@@ -63,7 +61,7 @@ export default function NavMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Building</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+            <ul className="grid w-[275px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {building.map((tool) => (
                 <ListItem key={tool.title} title={tool.title} href={tool.href}>
                   {tool.description}
